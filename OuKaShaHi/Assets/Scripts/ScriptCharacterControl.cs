@@ -12,18 +12,35 @@ public class ScriptCharacterControl : MonoBehaviour
     string m_MoveX;
 
     public bool m_IsAlive;
-    
+
+    public float m_WaitBeforeRespawn;
+
+    bool m_AlreadyDead;
+
+    public GameObject go_Child;
+
+    Rigidbody rb_ThisRigidBody;
+
+
 
 	// Use this for initialization
 	void Start ()
     {
         m_MoveZ = "VerticalPlayer" + m_PlayerID;
         m_MoveX = "HorizontalPlayer" + m_PlayerID;
+        rb_ThisRigidBody = this.GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (m_PlayerID==1)
+            m_IsAlive = false;
+        }
+
+
         if (m_IsAlive)
         {
             m_MoveSpeedZ = Input.GetAxis(m_MoveZ) * m_MoveMultiplier * Time.deltaTime;
@@ -43,9 +60,29 @@ public class ScriptCharacterControl : MonoBehaviour
 
         else
         {
-            
+            if (!m_AlreadyDead)
+            {
+                m_AlreadyDead = true;
+                go_Child.SetActive(false);
+                this.GetComponent<CapsuleCollider>().enabled = false;
+                rb_ThisRigidBody.useGravity=false; 
+                StartCoroutine(C_Respawn());
+            }   
         }
 
 
     }
+
+   
+
+    IEnumerator C_Respawn ()
+    {
+        Debug.Log("Wait for Respawn");
+        yield return new WaitForSeconds(m_WaitBeforeRespawn);
+        go_Child.SetActive(true);
+        this.GetComponent<CapsuleCollider>().enabled = true;
+        rb_ThisRigidBody.useGravity = true;
+        m_IsAlive = true;
+    }
+
 }
