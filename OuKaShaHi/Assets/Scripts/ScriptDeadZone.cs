@@ -29,7 +29,7 @@ public class ScriptDeadZone : MonoBehaviour
     public void Attack ()
     {
         StartCoroutine(C_Attack());
-        Debug.Log("Attaque en" + m_Number);
+
     }
 
     IEnumerator C_Attack ()

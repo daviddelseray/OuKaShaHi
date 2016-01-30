@@ -117,8 +117,6 @@ public class ScriptGameManager : MonoBehaviour
             l_Playing.Add(l_SoundBank[m_Index]);
             l_Attacks.Add(m_Index);
 
-            Debug.Log(l_Reading[l_Reading.Count - 1]);
-            Debug.Log(l_Attacks[l_Attacks.Count - 1]);
            
         }
 
