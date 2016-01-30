@@ -29,7 +29,7 @@ public class ScriptGameManager : MonoBehaviour
     // Various Variables
     float m_TextBankLength;
 
-    public int m_SequenceLength;
+    int m_SequenceLength;
 
     int m_Index;
 
@@ -40,6 +40,20 @@ public class ScriptGameManager : MonoBehaviour
     bool m_CheckIsGood;
 
     int m_DifficultyLevel=1;
+
+    public float m_WaitBetweenSequences;
+
+    int m_NumberofSameSequences;
+
+    int m_MaxNumberofSameSequences;
+
+    public int m_MNSS1;
+
+    public int m_MNSS2;
+
+    public int m_MNSS3;
+
+    public int m_MNSS4;
 
     //_____________________________________________________________________________
     // Levels of Difficulty
@@ -56,15 +70,20 @@ public class ScriptGameManager : MonoBehaviour
 
     AudioSource as_Speaker;
     
-	// Use this for initialization
+
+    //_________________________________________________________________________________
+
+
+	
 	void Start ()
     {
         as_Speaker = this.GetComponent<AudioSource>();
 
         m_TextBankLength = l_TextBank.Count;
 
-        FillingSequence();
-       StartCoroutine( ReadingSequence());
+        LaunchSequence();
+        //FillingSequence();
+       //StartCoroutine( ReadingSequence());
 	}
 	
 	// Update is called once per frame
@@ -107,30 +126,41 @@ public class ScriptGameManager : MonoBehaviour
 
     void LaunchSequence ()
     {
+        
         switch(m_DifficultyLevel)
         {
             case 1:
                 m_SequenceLength = m_Difficulty1;
+                m_MaxNumberofSameSequences = m_MNSS1;
                 break;
 
             case 2:
                 m_SequenceLength = m_Difficulty2;
+                m_MaxNumberofSameSequences = m_MNSS2;
                 break;
 
 
             case 3:
                 m_SequenceLength = m_Difficulty3;
+                m_MaxNumberofSameSequences = m_MNSS3;
                 break;
 
 
             case 4:
                 m_SequenceLength = m_Difficulty4;
+                m_MaxNumberofSameSequences = m_MNSS4;
                 break;
          }
 
+        FillingSequence();
+        StartCoroutine (ReadingSequence());
 
     }
 
+    void LaunchAttack()
+    {
+
+    }
 
    IEnumerator ReadingSequence ()// Lecture de la séquence, on parcourt les listes de lecture pour afficher les textes et pour jouer les sons
     {
@@ -140,8 +170,26 @@ public class ScriptGameManager : MonoBehaviour
             as_Speaker.Play();
 
             yield return new WaitForSeconds(l_Playing[j].length);
-            Debug.Log(l_Reading[j]);
-
+           
         }
+
+        StartCoroutine(BetweenSequence());
+    }
+
+    IEnumerator BetweenSequence ()
+    {
+        yield return new WaitForSeconds(m_WaitBetweenSequences);
+       
+        m_NumberofSameSequences++;
+
+       
+
+        if (m_NumberofSameSequences==m_MaxNumberofSameSequences)
+        {
+            m_DifficultyLevel++;
+            m_NumberofSameSequences = 0;
+        }
+       
+        LaunchSequence();
     }
 }
