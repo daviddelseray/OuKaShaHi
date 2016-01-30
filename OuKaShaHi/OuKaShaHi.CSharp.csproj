@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\ScriptArenaLifeZone.cs" />
     <Compile Include="Assets\Scripts\ScriptCharacterControl.cs" />
+    <Compile Include="Assets\Scripts\ScriptDeadZone.cs" />
     <Compile Include="Assets\Scripts\ScriptGameManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
