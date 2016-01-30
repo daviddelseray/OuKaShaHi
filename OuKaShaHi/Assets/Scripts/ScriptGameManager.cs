@@ -10,6 +10,8 @@ public class ScriptGameManager : MonoBehaviour
     public GameObject go_Deadzone3;
     public GameObject go_Deadzone4;
 
+    public GameObject go_Canvas;
+
     //_______________________________________________________________________
 
     //Texts Lists
@@ -183,6 +185,7 @@ public class ScriptGameManager : MonoBehaviour
         for(int j=0; j <m_SequenceLength;j++)
         {
             as_Speaker.clip = l_Playing[j];
+            go_Canvas.GetComponent<ScriptUI>().LaunchDisplay(l_Reading[j]);
             as_Speaker.Play();
 
             yield return new WaitForSeconds(l_Playing[j].length);
