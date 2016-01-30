@@ -203,6 +203,9 @@ public class ScriptGameManager : MonoBehaviour
        
         m_NumberofSameSequences++;
 
+        l_Reading.Clear();
+        l_Attacks.Clear();
+        l_Playing.Clear();
        
 
         if (m_NumberofSameSequences==m_MaxNumberofSameSequences)
