@@ -3,13 +3,19 @@ using System.Collections;
 
 public class ScriptCharacterControl : MonoBehaviour
 {
+    //Movement Members
     float m_MoveSpeedX;
+
     float m_MoveSpeedZ;
+
     public float m_MoveMultiplier;
-    public int m_PlayerID;
 
     string m_MoveZ;
+
     string m_MoveX;
+    //____________________________________________________________
+
+    //Life Members
 
     public bool m_IsAlive;
 
@@ -17,11 +23,19 @@ public class ScriptCharacterControl : MonoBehaviour
 
     bool m_AlreadyDead;
 
+    //___________________________________________________________
+
+    //Others Members
+    public int m_PlayerID;
+
     public GameObject go_Child;
 
     Rigidbody rb_ThisRigidBody;
 
+    //____________________________________________________________
 
+        
+    
 
 	// Use this for initialization
 	void Start ()
@@ -77,12 +91,13 @@ public class ScriptCharacterControl : MonoBehaviour
 
     IEnumerator C_Respawn ()
     {
-        Debug.Log("Wait for Respawn");
+        
         yield return new WaitForSeconds(m_WaitBeforeRespawn);
         go_Child.SetActive(true);
         this.GetComponent<CapsuleCollider>().enabled = true;
         rb_ThisRigidBody.useGravity = true;
         m_IsAlive = true;
+        m_AlreadyDead = false;
     }
 
 }

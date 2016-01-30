@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OuKaShaHi.CSharp.Plugins", "OuKaShaHi.CSharp.Plugins.csproj", "{5B2E20AB-41F9-E7F9-A2EA-F9115A6F4F2D}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OuKaShaHi.CSharp", "OuKaShaHi.CSharp.csproj", "{5BD1C671-38AA-05BE-6EE6-A2EECBE766FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OuKaShaHi.CSharp.Editor", "OuKaShaHi.CSharp.Editor.csproj", "{D75FF2EF-332A-B636-A1B5-5E75BA7565D8}"
@@ -11,6 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B2E20AB-41F9-E7F9-A2EA-F9115A6F4F2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B2E20AB-41F9-E7F9-A2EA-F9115A6F4F2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B2E20AB-41F9-E7F9-A2EA-F9115A6F4F2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B2E20AB-41F9-E7F9-A2EA-F9115A6F4F2D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5BD1C671-38AA-05BE-6EE6-A2EECBE766FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5BD1C671-38AA-05BE-6EE6-A2EECBE766FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BD1C671-38AA-05BE-6EE6-A2EECBE766FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
