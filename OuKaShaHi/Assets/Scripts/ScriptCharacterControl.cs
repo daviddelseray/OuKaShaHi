@@ -54,6 +54,10 @@ public class ScriptCharacterControl : MonoBehaviour
             m_IsAlive = false;
         }
 
+        if(this.transform.position.y<= 0.5f * this.transform.localScale.y)
+        {
+            this.transform.position = new Vector3(this.transform.position.x, 0.5f * this.transform.localScale.y, this.transform.position.z);
+        }
 
         if (m_IsAlive)
         {
@@ -78,7 +82,7 @@ public class ScriptCharacterControl : MonoBehaviour
             {
                 m_AlreadyDead = true;
                 go_Child.SetActive(false);
-                this.GetComponent<CapsuleCollider>().enabled = false;
+                this.GetComponent<SphereCollider>().enabled = false;
                 rb_ThisRigidBody.useGravity=false; 
                 StartCoroutine(C_Respawn());
             }   
@@ -94,7 +98,7 @@ public class ScriptCharacterControl : MonoBehaviour
         
         yield return new WaitForSeconds(m_WaitBeforeRespawn);
         go_Child.SetActive(true);
-        this.GetComponent<CapsuleCollider>().enabled = true;
+        this.GetComponent<SphereCollider>().enabled = true;
         rb_ThisRigidBody.useGravity = true;
         m_IsAlive = true;
         m_AlreadyDead = false;
