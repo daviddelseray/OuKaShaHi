@@ -16,17 +16,21 @@ public class ScriptGameManager : MonoBehaviour
 
     //Texts Lists
 
+    //public List<string> l_TextOverBank = new List<string>();
 
+    
+    
     public List<string> l_TextBank = new List<string>();
 
     List<string> l_Reading = new List<string>();
 
-   //__________________________________________________________________________
+    //__________________________________________________________________________
 
-   // Sound List
-   
+    // Sound List
 
-    public List<AudioClip> l_SoundBank = new List<AudioClip>();
+    //public List<AudioClip> l_SoundOverBank = new List<AudioClip>();
+
+   public List<AudioClip> l_SoundBank = new List<AudioClip>();
 
     List<AudioClip> l_Playing = new List<AudioClip>();
 
@@ -47,7 +51,7 @@ public class ScriptGameManager : MonoBehaviour
 
     int m_FillBankIndex;
 
-    int[] a_ExclusionArray = new int[4];
+    List<int> l_ExclusionList = new List<int>();
 
     bool m_CheckIsGood;
 
@@ -97,6 +101,7 @@ public class ScriptGameManager : MonoBehaviour
 
         m_TextBankLength = l_TextBank.Count;
 
+        //FillingBanks();
         LaunchSequence();
         //FillingSequence();
        //StartCoroutine( ReadingSequence());
@@ -123,23 +128,51 @@ public class ScriptGameManager : MonoBehaviour
         
     } 
 
-   /* void FillingBanks()
+   /*void FillingBanks()
     {
         for (int k =0; k<4;k++)
         {
-            m_FillBankIndex = Mathf.FloorToInt(Random.Range(0, l_TextsHere.Count));
+            m_FillBankIndex = Mathf.FloorToInt(Random.Range(0, l_TextOverBank.Count));
+                Debug.Log("FBEntrée"+m_FillBankIndex);
+            CheckingIndex(m_FillBankIndex,k);
+            l_ExclusionList.Add(m_FillBankIndex);
+            l_TextBank.Add(l_TextOverBank[m_FillBankIndex]);
+            l_SoundBank.Add(l_SoundOverBank[m_FillBankIndex]);
+
+                Debug.Log("FBMilieu"+m_FillBankIndex);
+
+                Debug.Log(l_ExclusionList[k]);
 
         }
-    }
-   void CheckingIndex()
-    {
-        for (int l = 0; l<=a_ExclusionArray.Length-1;l++)
+        foreach(string text in l_TextBank)
         {
+                Debug.Log(text);
+        }
+        
 
+    }
+
+   void CheckingIndex (int Index,int Count)
+    {
+        if (Count>0)
+        {
+            Debug.Log("OK");
+            for (int l = 0; l <= l_ExclusionList.Count - 1; l++)
+            {
+                if (Index == l_ExclusionList[l])
+                {
+                    while (Index == l_ExclusionList[l])
+                    {
+                       Index = Mathf.FloorToInt(Random.Range(0, l_TextOverBank.Count));
+                      
+                    }
+                    m_FillBankIndex = Index;
+                }
+            }
         }
     }
+    
     */
-
     void LaunchSequence ()
     {
         
