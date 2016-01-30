@@ -5,6 +5,9 @@ public class ScriptArenaLifeZone : MonoBehaviour {
 
 	void OnTriggerExit(Collider Other)
     {
-        Debug.Log("OY");
+        if (Other.tag == "Player")
+        {
+            Other.GetComponent<ScriptCharacterControl>().m_IsAlive = false;
+        }
     }
 }

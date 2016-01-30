@@ -41,6 +41,11 @@ public class ScriptCharacterControl : MonoBehaviour
 
         }
 
+        else
+        {
+            
+        }
+
 
     }
 }
