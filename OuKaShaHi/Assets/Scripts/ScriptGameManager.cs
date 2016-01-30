@@ -4,11 +4,16 @@ using System.Collections.Generic;
 
 public class ScriptGameManager : MonoBehaviour
 {
-  
+    //GameObjects
+    public GameObject go_Deadzone1;
+    public GameObject go_Deadzone2;
+    public GameObject go_Deadzone3;
+    public GameObject go_Deadzone4;
+
     //_______________________________________________________________________
 
-   //Texts Lists
-  
+    //Texts Lists
+
 
     public List<string> l_TextBank = new List<string>();
 
@@ -25,6 +30,11 @@ public class ScriptGameManager : MonoBehaviour
 
 
     //__________________________________________________________________________
+
+    //Attack List
+    List<int> l_Attacks = new List<int>();
+
+    //___________________________________________________________________________
 
     // Various Variables
     float m_TextBankLength;
@@ -54,6 +64,10 @@ public class ScriptGameManager : MonoBehaviour
     public int m_MNSS3;
 
     public int m_MNSS4;
+
+    public float m_WaitBetweenAttacks;
+
+    public float m_WaitBeforeAttacks;
 
     //_____________________________________________________________________________
     // Levels of Difficulty
@@ -99,7 +113,10 @@ public class ScriptGameManager : MonoBehaviour
             m_Index = Mathf.FloorToInt(Random.Range(0,m_TextBankLength));
             l_Reading.Add(l_TextBank[m_Index]);
             l_Playing.Add(l_SoundBank[m_Index]);
+            l_Attacks.Add(m_Index);
 
+            Debug.Log(l_Reading[l_Reading.Count - 1]);
+            Debug.Log(l_Attacks[l_Attacks.Count - 1]);
            
         }
 
@@ -114,8 +131,7 @@ public class ScriptGameManager : MonoBehaviour
 
         }
     }
-    */
-    /*void CheckingIndex()
+   void CheckingIndex()
     {
         for (int l = 0; l<=a_ExclusionArray.Length-1;l++)
         {
@@ -159,7 +175,7 @@ public class ScriptGameManager : MonoBehaviour
 
     void LaunchAttack()
     {
-
+        StartCoroutine(C_Attacks());
     }
 
    IEnumerator ReadingSequence ()// Lecture de la séquence, on parcourt les listes de lecture pour afficher les textes et pour jouer les sons
@@ -173,7 +189,9 @@ public class ScriptGameManager : MonoBehaviour
            
         }
 
-        StartCoroutine(BetweenSequence());
+        yield return new WaitForSeconds(m_WaitBeforeAttacks);
+
+        LaunchAttack();
     }
 
     IEnumerator BetweenSequence ()
@@ -191,5 +209,34 @@ public class ScriptGameManager : MonoBehaviour
         }
        
         LaunchSequence();
+    }
+
+    IEnumerator C_Attacks ()
+    {
+        foreach (int number in l_Attacks)
+        {
+            switch (number)
+            {
+                case 0:
+                    go_Deadzone1.GetComponent<ScriptDeadZone>().Attack();
+                    break;
+
+                case 1:
+                    go_Deadzone2.GetComponent<ScriptDeadZone>().Attack();
+                    break;
+
+                case 2:
+                    go_Deadzone3.GetComponent<ScriptDeadZone>().Attack();
+                    break;
+
+                case 3:
+                    go_Deadzone4.GetComponent<ScriptDeadZone>().Attack();
+                    break;
+            }
+
+            yield return new WaitForSeconds(m_WaitBetweenAttacks);
+        }
+
+        StartCoroutine(BetweenSequence());
     }
 }

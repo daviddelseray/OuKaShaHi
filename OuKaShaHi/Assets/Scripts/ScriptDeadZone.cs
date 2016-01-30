@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ScriptDeadZone : MonoBehaviour
 {
+    public int m_Number;
 
     Vector3 v3_SpreadScale;
     Vector3 v3_ContractScale;
@@ -28,6 +29,7 @@ public class ScriptDeadZone : MonoBehaviour
     public void Attack ()
     {
         StartCoroutine(C_Attack());
+        Debug.Log("Attaque en" + m_Number);
     }
 
     IEnumerator C_Attack ()
