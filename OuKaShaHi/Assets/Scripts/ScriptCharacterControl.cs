@@ -4,6 +4,11 @@ using System.Collections.Generic;
 
 public class ScriptCharacterControl : MonoBehaviour
 {
+    //Scripts
+
+
+    public ScriptCharacterSoundManager s_Sound;
+    //______________________________________________________________
     //Movement Members
     float m_MoveSpeedX;
 
@@ -39,6 +44,10 @@ public class ScriptCharacterControl : MonoBehaviour
 
     public List<GameObject> l_SideCreatures = new List<GameObject>();
 
+    bool m_RandomSoundLaunched;
+
+    float m_WaitBeforeSound;
+
     //____________________________________________________________
 
         
@@ -52,6 +61,8 @@ public class ScriptCharacterControl : MonoBehaviour
         rb_ThisRigidBody = this.GetComponent<Rigidbody>();
 
         m_RemainingLives = m_TotalLives;
+
+        s_Sound.callSoundRandom(PlayerPrefs.GetString("m_Character" + m_PlayerID));
         
 	}
 	
@@ -84,12 +95,19 @@ public class ScriptCharacterControl : MonoBehaviour
                 this.transform.position += new Vector3(m_MoveSpeedX, 0f, 0f);
             }
 
+            if (!m_RandomSoundLaunched)
+            {
+                m_RandomSoundLaunched = true;
+                m_WaitBeforeSound = Random.Range(5f, 15f);
+                StartCoroutine(C_RandomSound());
+            }
         }
 
         else
         {
             if (!m_AlreadyDead)
             {
+                s_Sound.callSoundDeath(PlayerPrefs.GetString("m_Character" + m_PlayerID));
                 m_AlreadyDead = true;
                 go_Child.SetActive(false);
                 this.GetComponent<SphereCollider>().enabled = false;
@@ -129,5 +147,13 @@ public class ScriptCharacterControl : MonoBehaviour
         rb_ThisRigidBody.useGravity = true;
         m_IsAlive = true;
         m_AlreadyDead = false;
+        s_Sound.callSoundRandom(PlayerPrefs.GetString("m_Character" + m_PlayerID));
+    }
+
+    IEnumerator C_RandomSound()
+    {
+        yield return new WaitForSeconds(m_WaitBeforeSound);
+        s_Sound.callSoundRandom(PlayerPrefs.GetString("m_Character" + m_PlayerID));
+        m_RandomSoundLaunched = false;
     }
 }
