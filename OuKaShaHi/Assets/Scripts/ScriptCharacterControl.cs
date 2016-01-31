@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ScriptCharacterControl : MonoBehaviour
 {
@@ -23,6 +24,10 @@ public class ScriptCharacterControl : MonoBehaviour
 
     bool m_AlreadyDead;
 
+    public int m_TotalLives;
+
+    int m_RemainingLives;
+
     //___________________________________________________________
 
     //Others Members
@@ -31,6 +36,8 @@ public class ScriptCharacterControl : MonoBehaviour
     public GameObject go_Child;
 
     Rigidbody rb_ThisRigidBody;
+
+    public List<GameObject> l_SideCreatures = new List<GameObject>();
 
     //____________________________________________________________
 
@@ -43,6 +50,9 @@ public class ScriptCharacterControl : MonoBehaviour
         m_MoveZ = "VerticalPlayer" + m_PlayerID;
         m_MoveX = "HorizontalPlayer" + m_PlayerID;
         rb_ThisRigidBody = this.GetComponent<Rigidbody>();
+
+        m_RemainingLives = m_TotalLives;
+        
 	}
 	
 	// Update is called once per frame
@@ -50,7 +60,7 @@ public class ScriptCharacterControl : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            if (m_PlayerID==1)
+            if (m_PlayerID==2)
             m_IsAlive = false;
         }
 
@@ -84,7 +94,15 @@ public class ScriptCharacterControl : MonoBehaviour
                 go_Child.SetActive(false);
                 this.GetComponent<SphereCollider>().enabled = false;
                 rb_ThisRigidBody.useGravity=false; 
-                StartCoroutine(C_Respawn());
+
+                if (m_RemainingLives>0)
+                {
+                    
+                    StartCoroutine(C_Respawn());
+                    
+                }
+               
+                
             }   
         }
 
@@ -97,11 +115,19 @@ public class ScriptCharacterControl : MonoBehaviour
     {
         
         yield return new WaitForSeconds(m_WaitBeforeRespawn);
+
+        l_SideCreatures[m_RemainingLives-1].GetComponent<ScriptSideCreature>().GotoyourDeath();
+        m_RemainingLives--;
+        Debug.Log(m_RemainingLives);
+    }
+
+    public void Respawn (Vector3 SpawnPoint)
+    {
+        this.transform.position = SpawnPoint;
         go_Child.SetActive(true);
         this.GetComponent<SphereCollider>().enabled = true;
         rb_ThisRigidBody.useGravity = true;
         m_IsAlive = true;
         m_AlreadyDead = false;
     }
-
 }
